@@ -1,0 +1,7 @@
+﻿<bdConfig>
+	<source>localhost</source>
+	<port>3306</port>
+	
+	<id>root</id>
+	<password></password>
+</bdConfig>
