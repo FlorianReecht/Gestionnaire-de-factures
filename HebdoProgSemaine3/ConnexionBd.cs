@@ -15,13 +15,24 @@ namespace HebdoProgSemaine3
 {
     public class ConnexionBd
     {
+        /**
+         * 
+         * Click on Combo Box element
+         *  private void H_ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+            {
+            if (_lb.SelectedItem is DossierViewModel dvm)
+            {
+                _vm.Affiche(dvm.Dir);
+            }
+            }
+         * 
+         **/
         public static ObservableCollection<string> ClientList = new ObservableCollection<string>();
         public static ObservableCollection<string> ProductList = new ObservableCollection<string>();
         public static ObservableCollection<TextBox> QteBoxList = new ObservableCollection<TextBox>();//Box contenant les quantitées , calcul de cout.
         public static List<(int,string, double)> AssociationQuantitéPrix = new List<(int,string, double)>();
         List<String> config = new List<String>();
         //Association entre l'id du produit, la quantité et le prix.
-
         public MySqlConnection Connect()
         {
             string path = "C:/Users/reflo/source/repos/HebdoProgSemaine3/HebdoProgSemaine3/Config.xml";
@@ -83,11 +94,6 @@ namespace HebdoProgSemaine3
                 {
                     string chaine = String.Format("{0}", reader["PRO_LIB"]);
                     ProductList.Add(chaine);
-                    TextBox t=new TextBox();
-                    t.Text="0";
-                    QteBoxList.Add(t);
-
-
                 }
                 c.Close ();
             }
@@ -97,6 +103,73 @@ namespace HebdoProgSemaine3
             }
 
 
+        }
+        public void UpdateClientList(string NomOuPrenom)
+        {
+            ClientList.Clear();
+            if (NomOuPrenom == "")
+            {
+                Fill_Client_List();
+            }
+            else
+            {
+                try
+                {
+                    MySqlConnection c = Connect();
+                    MySqlCommand command = new MySqlCommand(null, c);
+                    command.CommandText = "SELECT DISTINCT * FROM hebdochall3.client WHERE CLI_NOM LIKE  @Nom  OR CLI_PRENOM  LIKE @Nom  ";
+                    MySqlParameter nom = new MySqlParameter("@Nom", MySqlDbType.Text, 50);
+                    nom.Value = "%"+NomOuPrenom+"%";
+                    command.Parameters.Add(nom);
+                    command.Prepare();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string chaine = String.Format("{0},{1}", reader["CLI_NOM"], reader["CLI_PRENOM"]);
+                        ClientList.Add(chaine);
+                    }
+
+                    c.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("error while select :" + ex.Message);
+                }
+
+            }
+            
+        }
+        public void UpdateProduitList(string nomProduit)
+        {
+            ProductList.Clear();
+            if(nomProduit == "")
+            {
+                Fill_Produit_List();
+            }
+            else
+            {
+                try
+                {
+                    MySqlConnection c =Connect();
+                    MySqlCommand command = new MySqlCommand(null, c);
+                    command.CommandText = "SELECT * FROM hebdochall3.produit WHERE PRO_LIB LIKE @nomProduit";
+                    MySqlParameter nom=new MySqlParameter("@nomProduit",MySqlDbType.Text, 50);
+                    nom.Value="%"+nomProduit+"%";
+                    command.Parameters.Add(nom);
+                    command.Prepare();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string chaine = String.Format("{0}", reader["PRO_LIB"]);
+                        ProductList.Add(chaine);    
+                    }
+                    c.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("error while select :" + ex.Message);
+                }
+            }
         }
     }
 }

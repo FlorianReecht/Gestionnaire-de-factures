@@ -9,10 +9,16 @@
     <Grid>
 
         <Button Margin="605,378,0,0">Imprimer</Button>
-        <ListBox Grid.Row="0" x:Name="ClientList" Margin="449,0,0,202"/>
-        <ListBox Grid.Column="0" x:Name="ListProduit" Margin="9,146,605,80"/>
-        <ListBox x:Name="QteListBox" Margin="200,146,400,81"/>
-        <Button x:Name="CalculCout" Margin="200,378,400,10" Click="CalculCout_Click">CalculerPrix</Button>
-        <TextBox x:Name="PrixTotale" Margin="0,376,600,10">Prix :</TextBox>
+        <ListBox Grid.Column="0" x:Name="ListProduit" Margin="10,67,493,157"/>
+        <Button x:Name="CalculCout" Margin="621,321,0,61" Click="CalculCout_Click">CalculerPrix</Button>
+        <TextBox x:Name="PrixTotale" Margin="454,326,168,61" TextChanged="PrixTotale_TextChanged">Prix :</TextBox>
+        <Label Content="Chercher un produit :" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="163,40,0,0" TextWrapping="Wrap" Text="NomProduit" VerticalAlignment="Top" Width="120" x:Name="nomProduit"/>
+        <ListBox x:Name="currentFacture" Margin="539,49,22,161"/>
+        <Label Content="Produit Séléctioné : " HorizontalAlignment="Left" Margin="6,312,0,0" VerticalAlignment="Top" Height="30" Width="127"/>
+        <TextBlock HorizontalAlignment="Left" Margin="148,314,0,0" TextWrapping="Wrap" Text="CurrentProduit" VerticalAlignment="Top" Height="20" Width="109" x:Name="currentProduit" />
+        <Button Margin="247,374,364,10" >Ajouter à la facture</Button>
+        <Label Content="Quantité" HorizontalAlignment="Left" Margin="15,373,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="103,378,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>

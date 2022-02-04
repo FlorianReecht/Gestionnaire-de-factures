@@ -23,22 +23,34 @@ namespace HebdoProgSemaine3
     public partial class MainWindow : Window
     {
         public ConnexionBd _connexion;//Permet la connexion à la base de données et fait les requètes 
+        
+        void TextChanged(object Sender, TextChangedEventArgs e)
+        {
+            TextBox o = (TextBox)Sender;
+            _connexion.UpdateProduitList(o.Text);
+
+        }
 
         public MainWindow()
         {
             InitializeComponent();
-            ClientList.ItemsSource = ConnexionBd.ClientList;
             ListProduit.ItemsSource = ConnexionBd.ProductList;
-            QteListBox.ItemsSource = ConnexionBd.QteBoxList;
             _connexion = new ConnexionBd();
             //_connexion.Connect();
-            _connexion.Fill_Client_List();
             _connexion.Fill_Produit_List();
+            nomProduit.TextChanged += new TextChangedEventHandler(TextChanged);
+
         }
 
         private void CalculCout_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
+        private void PrixTotale_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+  
     }
 }
