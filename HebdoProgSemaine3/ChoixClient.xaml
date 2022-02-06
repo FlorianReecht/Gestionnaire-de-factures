@@ -9,12 +9,12 @@
     <Grid>
         <TextBox HorizontalAlignment="Left" Margin="156,36,0,0" TextWrapping="Wrap" Text="nomClient" VerticalAlignment="Top" Width="129" Height="22" x:Name="nomClient"/>
         <Label Content="Entrez le nom du client : " HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
-        <ListBox  x:Name="ClientList" Margin="10,87,515,66"/>
+        <ListBox  x:Name="ClientList" Margin="10,87,515,66" MouseDoubleClick="ClickOnClientOnList"/>
         <Button Content="Voir les factures " Margin="340,340,247,47" Click="See_Facture_Client_Click"/>
         <Button Content="Ajouter une facture" HorizontalAlignment="Left" Margin="574,340,0,0" VerticalAlignment="Top" Height="47" Width="188" Click="Choose_Client_Click"/>
 
         <Label Content="Client choisi :" HorizontalAlignment="Left" Margin="10,373,0,0" VerticalAlignment="Top" Height="47" Width="127"/>
-        <Label Content="CurrentClient" HorizontalAlignment="Left" Margin="104,373,0,0" VerticalAlignment="Top" Height="45" Width="130" x:Name="currentClient"/>
+        <TextBlock HorizontalAlignment="Left" Margin="104,373,0,0" VerticalAlignment="Top" Height="45" Width="181" x:Name="currentClient" Text="currentclient"/>
 
     </Grid>
 </Window>

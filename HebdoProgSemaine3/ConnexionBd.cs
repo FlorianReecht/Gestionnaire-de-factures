@@ -13,25 +13,23 @@ using System.Xml.Linq;
 
 namespace HebdoProgSemaine3
 {
-    public class ConnexionBd
+   
+    public class ConnexionBd //Classe Etat Back de l'application qui permet la connexion à la base de données et de gérer les clients/ produits... 
     {
-        /**
-         * 
-         * Click on Combo Box element
-         *  private void H_ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-            {
-            if (_lb.SelectedItem is DossierViewModel dvm)
-            {
-                _vm.Affiche(dvm.Dir);
-            }
-            }
-         * 
-         **/
-        public static ObservableCollection<string> ClientList = new ObservableCollection<string>();
-        public static ObservableCollection<string> ProductList = new ObservableCollection<string>();
-        public static ObservableCollection<TextBox> QteBoxList = new ObservableCollection<TextBox>();//Box contenant les quantitées , calcul de cout.
-        public static List<(int,string, double)> AssociationQuantitéPrix = new List<(int,string, double)>();
-        List<String> config = new List<String>();
+        //Listes de l'application 
+        //public static ObservableCollection<string> ClientList = new ObservableCollection<string>();
+        //public static ObservableCollection<string> ProductList = new ObservableCollection<string>();
+
+        public static ObservableCollection<Client> ClientList = new ObservableCollection<Client>();
+        public static ObservableCollection<Produit> ProductList = new ObservableCollection<Produit>();
+        public static ObservableCollection<LigneFacture> CurrentFacture = new ObservableCollection<LigneFacture>();
+       
+        List<String> config = new List<String>(); //Lecture dans le fichier config.xml en chemin absolu changer pour le chemin relatif
+
+        //client choisi pour update les factures 
+        public Client CurrentClient { get; set; }
+        public Produit CurrentProduit { get; set; }
+        
         //Association entre l'id du produit, la quantité et le prix.
         public MySqlConnection Connect()
         {
@@ -70,8 +68,11 @@ namespace HebdoProgSemaine3
                 MySqlDataReader reader = c2.ExecuteReader();
                 while (reader.Read())
                 {
-                    string chaine = String.Format("{0},{1}", reader["CLI_NOM"], reader["CLI_PRENOM"]);
-                    ClientList.Add(chaine);
+                    int num = (int)reader["CLI_CODE"];
+                    string nom = reader["CLI_NOM"].ToString();
+                    string prenom = reader["CLI_PRENOM"].ToString();
+                    Client cli= new Client(num,nom, prenom);
+                    ClientList.Add(cli);
                 }
                 c.Close();
 
@@ -92,8 +93,8 @@ namespace HebdoProgSemaine3
                 MySqlDataReader reader = c2.ExecuteReader();
                 while (reader.Read())
                 {
-                    string chaine = String.Format("{0}", reader["PRO_LIB"]);
-                    ProductList.Add(chaine);
+                    Produit p = new Produit((int)reader["PRO_CODE"], reader["PRO_LIB"].ToString(), (double)reader["PRO_PRIX"]);
+                    ProductList.Add(p);
                 }
                 c.Close ();
             }
@@ -125,8 +126,11 @@ namespace HebdoProgSemaine3
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        string chaine = String.Format("{0},{1}", reader["CLI_NOM"], reader["CLI_PRENOM"]);
-                        ClientList.Add(chaine);
+                        int num = (int)reader["CLI_CODE"];
+                        string nomcli = reader["CLI_NOM"].ToString();
+                        string prenomcli = reader["CLI_PRENOM"].ToString();
+                        Client cli = new Client(num, nomcli, prenomcli);
+                        ClientList.Add(cli);
                     }
 
                     c.Close();
@@ -160,8 +164,8 @@ namespace HebdoProgSemaine3
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        string chaine = String.Format("{0}", reader["PRO_LIB"]);
-                        ProductList.Add(chaine);    
+                        Produit p = new Produit((int)reader["PRO_CODE"], reader["PRO_LIB"].ToString(), (double)reader["PRO_PRIX"]);
+                        ProductList.Add(p);    
                     }
                     c.Close();
                 }

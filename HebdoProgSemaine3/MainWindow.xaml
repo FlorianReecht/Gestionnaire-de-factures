@@ -9,16 +9,19 @@
     <Grid>
 
         <Button Margin="605,378,0,0">Imprimer</Button>
-        <ListBox Grid.Column="0" x:Name="ListProduit" Margin="10,67,493,157"/>
-        <Button x:Name="CalculCout" Margin="621,321,0,61" Click="CalculCout_Click">CalculerPrix</Button>
-        <TextBox x:Name="PrixTotale" Margin="454,326,168,61" TextChanged="PrixTotale_TextChanged">Prix :</TextBox>
+        <ListBox Grid.Column="0" x:Name="ListProduit" Margin="10,85,481,130" MouseDoubleClick="ClickOnProduitOnList"/>
+        <Button x:Name="CalculCout" Margin="476,314,195,79" Click="CalculCout_Click">CalculerPrix</Button>
+        <TextBlock x:Name="PrixTotal" Margin="627,316,53,70" Text="Prix :"/>
         <Label Content="Chercher un produit :" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="163,40,0,0" TextWrapping="Wrap" Text="NomProduit" VerticalAlignment="Top" Width="120" x:Name="nomProduit"/>
-        <ListBox x:Name="currentFacture" Margin="539,49,22,161"/>
+        <ListBox x:Name="currentFacture" Margin="368,85,20,125" SelectionChanged="currentFacture_SelectionChanged"/>
         <Label Content="Produit Séléctioné : " HorizontalAlignment="Left" Margin="6,312,0,0" VerticalAlignment="Top" Height="30" Width="127"/>
-        <TextBlock HorizontalAlignment="Left" Margin="148,314,0,0" TextWrapping="Wrap" Text="CurrentProduit" VerticalAlignment="Top" Height="20" Width="109" x:Name="currentProduit" />
-        <Button Margin="247,374,364,10" >Ajouter à la facture</Button>
-        <Label Content="Quantité" HorizontalAlignment="Left" Margin="15,373,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="103,378,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="148,314,0,0" TextWrapping="Wrap" Text="CurrentProduit" VerticalAlignment="Top" Height="20" Width="272" x:Name="currentProduit" />
+        <Button Margin="228,342,369,28" Click="AjoutFacture" >Ajouter à la facture</Button>
+        <Label Content="Quantité" HorizontalAlignment="Left" Margin="15,349,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="98,355,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" x:Name="QteBox"/>
+        <Label Content="Facture actuelle " HorizontalAlignment="Left" Margin="476,18,0,0" VerticalAlignment="Top" Height="26" Width="247"/>
+        <Label Content="currentClient" HorizontalAlignment="Left" Margin="259,12,0,0" VerticalAlignment="Top" x:Name="nomCli" Height="37" Width="217"/>
+        <Button Content="Précédent" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Height="21" Width="78" Click="goBackToMain"/>
     </Grid>
 </Window>

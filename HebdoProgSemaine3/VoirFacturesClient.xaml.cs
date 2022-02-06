@@ -23,5 +23,11 @@ namespace HebdoProgSemaine3
         {
             InitializeComponent();
         }
+        private void goBackToMain(object sender, RoutedEventArgs e)
+        {
+            new ChoixClient().Show();
+            this.Close();
+        }
+
     }
 }
