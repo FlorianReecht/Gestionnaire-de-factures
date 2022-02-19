@@ -5,16 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HebdoProgSemaine3"
         mc:Ignorable="d"
-        Title="ChoixClient" Height="450" Width="800">
-    <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="156,36,0,0" TextWrapping="Wrap" Text="nomClient" VerticalAlignment="Top" Width="129" Height="22" x:Name="nomClient"/>
-        <Label Content="Entrez le nom du client : " HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
-        <ListBox  x:Name="ClientList" Margin="10,87,515,66" MouseDoubleClick="ClickOnClientOnList"/>
-        <Button Content="Voir les factures " Margin="340,340,247,47" Click="See_Facture_Client_Click"/>
-        <Button Content="Ajouter une facture" HorizontalAlignment="Left" Margin="574,340,0,0" VerticalAlignment="Top" Height="47" Width="188" Click="Choose_Client_Click"/>
+        Title="ChoixClient" Height="450" Width="800"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+    <Border Background="#272537"
+            CornerRadius="10">
+        <Grid>
+            <TextBox HorizontalAlignment="Left" Margin="171,31,0,0" VerticalAlignment="Top" Width="202" Height="51" x:Name="nomClient" Style="{StaticResource ModernTextBox}" />
+            <Button  Margin="478,359,109,15" Click="See_Facture_Client_Click" Style="{StaticResource VoirFactureButton}"/>
+            <Button Margin="630,359,10,15"  Click="Choose_Client_Click" Content="Ajouter une facture" Style="{StaticResource  AjouterFactureButton}" />
 
-        <Label Content="Client choisi :" HorizontalAlignment="Left" Margin="10,373,0,0" VerticalAlignment="Top" Height="47" Width="127"/>
-        <TextBlock HorizontalAlignment="Left" Margin="104,373,0,0" VerticalAlignment="Top" Height="45" Width="181" x:Name="currentClient" Text="currentclient"/>
+            <Label Content="Client choisi :" HorizontalAlignment="Left" Margin="10,400,0,0" VerticalAlignment="Top" Height="35" Width="120" Style="{StaticResource TextStyle}"/>
+            <Label Content="clientActuel" HorizontalAlignment="Left" Margin="129,400,0,0" VerticalAlignment="Top" Height="35" Width="120" x:Name="currentClient" Style="{StaticResource TextStyle}"/>
+            <Label Content="Entrez le nom du client : " HorizontalAlignment="Left" Margin="10,44,0,0" VerticalAlignment="Top" Style="{StaticResource TextStyle}"/>
 
-    </Grid>
+            <ListBox  x:Name="ClientList" Margin="10,87,515,66" MouseDoubleClick="ClickOnClientOnList" Style="{StaticResource ComboBoxTheme}" ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Nom}" Foreground="Snow" Width="100"></TextBlock>
+                            <TextBlock Text="{Binding Prenom }" Foreground="Snow" Width="100"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="9"></Setter>
+                        <Setter Property="Padding" Value="9"></Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="Black"></Setter>
+                                <Setter Property="BorderThickness" Value="5"></Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+
+
+
+        </Grid>
+
+    </Border>
+
 </Window>

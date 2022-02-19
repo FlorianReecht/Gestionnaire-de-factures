@@ -9,10 +9,29 @@ namespace HebdoProgSemaine3
 {
     public class Facture
     {
+        public int NumFacture { get; set; }
+        public int NumClient { get; set; }
+        public DateTime DateFacture { get; set; }
         public ObservableCollection<LigneFacture> LignesFactures { get; set; }
+        public Facture(int numC)
+        {
+            LignesFactures = new ObservableCollection<LigneFacture>();
+            NumClient = numC;
+            DateFacture = DateTime.Now;
+        }
+        public Facture(int numC, DateTime d, int numF)
+        {
+            NumFacture= numF;
+            DateFacture = d;
+            NumClient= numC;
+        }
+        
+
+        
         public Facture()
         {
             LignesFactures = new ObservableCollection<LigneFacture>();
+            NumClient = 1;
         }
         public void AddLigne(LigneFacture nextLine)
         {
@@ -28,6 +47,11 @@ namespace HebdoProgSemaine3
             }
             return retour;
          
+        }
+
+        public override string ToString()
+        {
+            return "Facture numéro "+ this.NumFacture +"  effectuée le :" + this.DateFacture.ToString();
         }
     }
 }

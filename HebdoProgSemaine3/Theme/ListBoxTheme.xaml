@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="ComboBoxTheme" TargetType="ListBox">
+        <Setter Property="Background" Value="Transparent"></Setter>
+        
+    </Style>
+    <Style x:Key="ListBoxItemsTheme" TargetType="ListBoxItem">
+        <Setter Property="Foreground" Value="Snow"></Setter>
+    </Style>
+    
+</ResourceDictionary>

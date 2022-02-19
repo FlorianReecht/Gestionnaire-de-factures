@@ -33,19 +33,22 @@ namespace HebdoProgSemaine3
             nomClient.TextChanged += new TextChangedEventHandler(TextChanged);
            
         }
+
         void TextChanged(object Sender, TextChangedEventArgs e)
         {
+            //o.text est vide si on rajoute le style par dessus
             TextBox o = (TextBox)Sender;
             _connexion.UpdateClientList(o.Text);
+            
         }
 
         private void Choose_Client_Click(object sender, RoutedEventArgs e)//Changement de Page
         {
-            if(_connexion.CurrentClient!=null)
+            if(ConnexionBd.CurrentClient!=null)
             {
                 MainWindow w = new MainWindow();
                 w.Show();
-                w.nomCli.Content = " Client séléctioné : " + currentClient.Text;
+                w.nomCli.Content = " Client séléctioné : " + currentClient.Content;
                 this.Close();
             }
             else
@@ -66,9 +69,11 @@ namespace HebdoProgSemaine3
         {
             ListBox listBox = sender as ListBox;
             Client currentCli=listBox.SelectedItem as Client;
-            _connexion.CurrentClient = currentCli;
-            currentClient.Text =_connexion.CurrentClient.Nom + " "+ _connexion.CurrentClient.Prenom;//Nom du client séléctionné dans la page
+            ConnexionBd.CurrentClient = currentCli;
+            currentClient.Content =ConnexionBd.CurrentClient.Nom + " "+ ConnexionBd.CurrentClient.Prenom;//Nom du client séléctionné dans la page
             
         }
+
+     
     }
 }

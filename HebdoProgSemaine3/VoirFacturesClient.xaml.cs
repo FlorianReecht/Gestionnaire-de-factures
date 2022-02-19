@@ -19,9 +19,15 @@ namespace HebdoProgSemaine3
     /// </summary>
     public partial class VoirFacturesClient : Window
     {
+        ConnexionBd _connexion;
         public VoirFacturesClient()
         {
+            _connexion= new ConnexionBd();
             InitializeComponent();
+            ListFactureClient.ItemsSource = ConnexionBd.FactureList;
+            _connexion.Fill_Facture_List(ConnexionBd.CurrentClient);
+
+           
         }
         private void goBackToMain(object sender, RoutedEventArgs e)
         {

@@ -16,18 +16,16 @@ namespace HebdoProgSemaine3
    
     public class ConnexionBd //Classe Etat Back de l'application qui permet la connexion à la base de données et de gérer les clients/ produits... 
     {
-        //Listes de l'application 
-        //public static ObservableCollection<string> ClientList = new ObservableCollection<string>();
-        //public static ObservableCollection<string> ProductList = new ObservableCollection<string>();
 
         public static ObservableCollection<Client> ClientList = new ObservableCollection<Client>();
         public static ObservableCollection<Produit> ProductList = new ObservableCollection<Produit>();
         public static ObservableCollection<LigneFacture> CurrentFacture = new ObservableCollection<LigneFacture>();
+        public static ObservableCollection<Facture> FactureList = new ObservableCollection<Facture>();
        
         List<String> config = new List<String>(); //Lecture dans le fichier config.xml en chemin absolu changer pour le chemin relatif
 
         //client choisi pour update les factures 
-        public Client CurrentClient { get; set; }
+        public static  Client CurrentClient { get; set; }
         public Produit CurrentProduit { get; set; }
         
         //Association entre l'id du produit, la quantité et le prix.
@@ -105,6 +103,28 @@ namespace HebdoProgSemaine3
 
 
         }
+        public void Fill_Facture_List(Client c)
+        {
+            String request = "SELECT * FROM hebdochall3.facture";
+            try
+            {
+                MySqlConnection co=Connect();
+                MySqlCommand cmd = new MySqlCommand(request, co);
+                MySqlDataReader reader=cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    int num = (int)reader["FAC_NUM"];
+                    DateTime date = (DateTime)reader["FAC_DATE"];
+                    Facture f=new Facture(ConnexionBd.CurrentClient.NumCli,date, num);
+                    ConnexionBd.FactureList.Add(f);
+
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error while filling list facture :" + ex.Message);
+            }
+        }
         public void UpdateClientList(string NomOuPrenom)
         {
             ClientList.Clear();
@@ -175,5 +195,70 @@ namespace HebdoProgSemaine3
                 }
             }
         }
+        
+        
+        public void InsertFactureIntoBdd(Client Selectedclient ,Facture facture)//Insert fonctionne Inserer les lignes facture correspondantes.
+        {
+            //Insertion de la facture
+            //Récupération du dernier ID
+            //Insertion des  lignes à partir du dernier ID.
+            try
+            {
+
+
+                string reqtInsertFacture = "INSERT INTO hebdochall3.facture (FAC_DATE,CLI_NUM) VALUES (@date,@numCli)";
+                string reqInsertLigneFacture = "INSERT INTO hebdochall3.ligne (LIG_FACT,LIG_PROD,LIG_QTE) VALUES (@numFacture,@numproduit,@quantitep)";
+                string requestLastInsert = "SELECT LAST_INSERT_ID() ";
+                
+               
+                
+                MySqlConnection conn = Connect();
+                MySqlCommand cmd = new MySqlCommand(reqtInsertFacture, conn);
+                MySqlCommand cmd2= new MySqlCommand(reqInsertLigneFacture, conn);
+                MySqlCommand cmd3 = new MySqlCommand(requestLastInsert, conn);
+                MySqlParameter datep = new MySqlParameter("@date", MySqlDbType.Date);
+                MySqlParameter numC = new MySqlParameter("@numCli", MySqlDbType.Int32);
+                MySqlParameter numFacture = new MySqlParameter("@numFacture", MySqlDbType.Int32);
+                MySqlParameter numProduit = new MySqlParameter("@numproduit", MySqlDbType.Int32);
+                MySqlParameter qte = new MySqlParameter("@quantitep", MySqlDbType.Int32);
+                cmd2.Parameters.Add(numFacture);
+                cmd2.Parameters.Add(qte);
+                cmd2.Parameters.Add(numProduit);
+                numC.Value = ConnexionBd.CurrentClient.NumCli;//Attribut statique pas la meilleure solution.
+                datep.Value = facture.DateFacture;
+                cmd.Parameters.Add(datep);
+                cmd.Parameters.Add(numC);
+                cmd.Prepare();
+                var query = cmd.ExecuteNonQuery();
+                var lastIndex = cmd3.ExecuteScalar();
+                ///MessageBox.Show("Last insert id   : " + lastIndex.ToString());
+                if (query != 0)
+                {
+                    MessageBox.Show("Insertion Facture validée");
+                }
+                foreach (LigneFacture ligneFacture in facture.LignesFactures)
+                {
+    
+                    numFacture.Value = lastIndex;
+                    qte.Value = ligneFacture.Qte;
+                    numProduit.Value =ligneFacture.Produit.NumProduit;
+
+                    cmd2.Prepare();
+                    var query2= cmd2.ExecuteNonQuery();
+                    MessageBox.Show("Insertion ligne réussie");
+                }
+
+                
+         
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("error While Insert facture"+ ex.Message);
+            }
+            
+
+        }
+    
+    
     }
 }
