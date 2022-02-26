@@ -32,6 +32,7 @@ namespace HebdoProgSemaine3
         {
             LignesFactures = new ObservableCollection<LigneFacture>();
             NumClient = 1;
+            DateFacture= DateTime.Now;
         }
         public void AddLigne(LigneFacture nextLine)
         {

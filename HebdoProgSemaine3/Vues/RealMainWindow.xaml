@@ -1,0 +1,52 @@
+﻿<Window x:Class="HebdoProgSemaine3.Vues.RealMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HebdoProgSemaine3.Vues"
+        mc:Ignorable="d"
+        Background="#272537"
+        Title="RealMainWindow" Height="450" Width="800"
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ListBox Grid.Column="0" x:Name="NavBarListBox"  Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBoxItem>
+                <Button Background="Transparent" Foreground="Snow" Click="goBackToMain" BorderBrush="{x:Null}" >
+                    <Button.ContentTemplate>
+                        <ItemContainerTemplate>
+                            <Image Source="..\Resources\HomeLogo.png" Width="95" Height="95" ></Image>
+                        </ItemContainerTemplate>
+                    </Button.ContentTemplate>
+                </Button>
+
+            </ListBoxItem>
+            <ListBoxItem>
+                <Button Background="Transparent" Click="VoirFactures" Width="95" Height="95" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                    <Button.ContentTemplate>
+                        <ItemContainerTemplate>
+                            <Image Source="..\Resources\DocLogo.png" Width="95" Height="95"></Image>
+                        </ItemContainerTemplate>
+                    </Button.ContentTemplate>
+                </Button>
+            </ListBoxItem>
+            <ListBoxItem>
+                <Button  Background="Transparent"  Click="MooveToAddFacturePage" BorderBrush="{x:Null}">
+                    <Button.ContentTemplate>
+                        <ItemContainerTemplate>
+                            <Image Source="..\Resources\PlusLogo.png" Width="95" Height="95"></Image>
+                        </ItemContainerTemplate>
+                    </Button.ContentTemplate>
+                </Button>
+            </ListBoxItem>
+        </ListBox>
+
+        <DockPanel Grid.Column="1">
+            <ContentControl x:Name="ContentView" Height="394" Width="681" ></ContentControl>
+        </DockPanel>
+
+    </Grid>
+</Window>

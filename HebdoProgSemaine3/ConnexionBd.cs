@@ -17,6 +17,9 @@ namespace HebdoProgSemaine3
     public class ConnexionBd //Classe Etat Back de l'application qui permet la connexion à la base de données et de gérer les clients/ produits... 
     {
 
+        //Nouvelle version du code disparition des attributs statiques apparition de champs currentFacture currentProduit et currentClient 
+        //Connexion Bd dans chacune des vues.
+
         public static ObservableCollection<Client> ClientList = new ObservableCollection<Client>();
         public static ObservableCollection<Produit> ProductList = new ObservableCollection<Produit>();
         public static ObservableCollection<LigneFacture> CurrentFacture = new ObservableCollection<LigneFacture>();
@@ -24,11 +27,19 @@ namespace HebdoProgSemaine3
        
         List<String> config = new List<String>(); //Lecture dans le fichier config.xml en chemin absolu changer pour le chemin relatif
 
-        //client choisi pour update les factures 
-        public static  Client CurrentClient { get; set; }
+      
         public Produit CurrentProduit { get; set; }
-        
+        public Client _currentClient { get; set; }
+        public void ClearAllLists()
+        {
+            ClientList.Clear();
+            ProductList.Clear();
+            FactureList.Clear();
+           
+        }
+
         //Association entre l'id du produit, la quantité et le prix.
+  
         public MySqlConnection Connect()
         {
             string path = "C:/Users/reflo/source/repos/HebdoProgSemaine3/HebdoProgSemaine3/Config.xml";
@@ -105,17 +116,21 @@ namespace HebdoProgSemaine3
         }
         public void Fill_Facture_List(Client c)
         {
-            String request = "SELECT * FROM hebdochall3.facture";
+            String request = "SELECT * FROM hebdochall3.facture WHERE CLI_NUM = @idCli ";
             try
             {
                 MySqlConnection co=Connect();
                 MySqlCommand cmd = new MySqlCommand(request, co);
+                MySqlParameter id = new MySqlParameter("@idCli", MySqlDbType.Int32);
+                id.Value = c.NumCli;
+                cmd.Parameters.Add(id);
+                cmd.Prepare();
                 MySqlDataReader reader=cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     int num = (int)reader["FAC_NUM"];
                     DateTime date = (DateTime)reader["FAC_DATE"];
-                    Facture f=new Facture(ConnexionBd.CurrentClient.NumCli,date, num);
+                    Facture f=new Facture(_currentClient.NumCli,date, num);
                     ConnexionBd.FactureList.Add(f);
 
                 }
@@ -224,7 +239,7 @@ namespace HebdoProgSemaine3
                 cmd2.Parameters.Add(numFacture);
                 cmd2.Parameters.Add(qte);
                 cmd2.Parameters.Add(numProduit);
-                numC.Value = ConnexionBd.CurrentClient.NumCli;//Attribut statique pas la meilleure solution.
+                numC.Value = _currentClient.NumCli;//Attribut statique pas la meilleure solution.
                 datep.Value = facture.DateFacture;
                 cmd.Parameters.Add(datep);
                 cmd.Parameters.Add(numC);

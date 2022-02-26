@@ -10,30 +10,28 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HebdoProgSemaine3
+namespace HebdoProgSemaine3.Vues
 {
     /// <summary>
-    /// Logique d'interaction pour VoirFacturesClient.xaml
+    /// Logique d'interaction pour VoirFacturesVue.xaml
     /// </summary>
-    public partial class VoirFacturesClient : Window
+    public partial class VoirFacturesVue : UserControl
     {
-        ConnexionBd _connexion;
-        public VoirFacturesClient()
+        ConnexionBd connexion;
+        public VoirFacturesVue(ConnexionBd co)
         {
-            _connexion= new ConnexionBd();
+            connexion = co;
             InitializeComponent();
             ListFactureClient.ItemsSource = ConnexionBd.FactureList;
-            _connexion.Fill_Facture_List(ConnexionBd.CurrentClient);
+            currentClientLabel.Content = connexion._currentClient.Nom + " " + connexion._currentClient.Prenom;
+            connexion.ClearAllLists();
+            connexion.Fill_Facture_List(connexion._currentClient);
 
-           
         }
-        private void goBackToMain(object sender, RoutedEventArgs e)
-        {
-            new ChoixClient().Show();
-            this.Close();
-        }
+
 
     }
 }
