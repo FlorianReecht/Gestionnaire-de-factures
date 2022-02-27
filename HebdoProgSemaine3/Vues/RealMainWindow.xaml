@@ -22,7 +22,9 @@
                         </ItemContainerTemplate>
                     </Button.ContentTemplate>
                 </Button>
-
+            </ListBoxItem>
+            <ListBoxItem>
+                <Label Content="Menu Principal" Style="{StaticResource TextStyle}"></Label>
             </ListBoxItem>
             <ListBoxItem>
                 <Button Background="Transparent" Click="VoirFactures" Width="95" Height="95" BorderBrush="{x:Null}" Foreground="{x:Null}">
@@ -34,6 +36,9 @@
                 </Button>
             </ListBoxItem>
             <ListBoxItem>
+                <Label Content="Voir Factures" Style="{StaticResource TextStyle}"></Label>
+            </ListBoxItem>
+            <ListBoxItem>
                 <Button  Background="Transparent"  Click="MooveToAddFacturePage" BorderBrush="{x:Null}">
                     <Button.ContentTemplate>
                         <ItemContainerTemplate>
@@ -41,6 +46,9 @@
                         </ItemContainerTemplate>
                     </Button.ContentTemplate>
                 </Button>
+            </ListBoxItem>
+            <ListBoxItem>
+                <Label Style="{StaticResource TextStyle}"> Ajouter une Facture</Label>
             </ListBoxItem>
         </ListBox>
 

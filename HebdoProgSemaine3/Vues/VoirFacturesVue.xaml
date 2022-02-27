@@ -7,7 +7,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="394" d:DesignWidth="681">
     <Grid>
-        <ListBox  Margin="127,61,199,91" x:Name="ListFactureClient"/>
+        <ListBox  Margin="127,61,199,91" x:Name="ListFactureClient" Style="{StaticResource ComboBoxTheme}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Margin" Value="9"></Setter>
+                    <Setter Property="Foreground" Value="Snow"></Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="Black"></Setter>
+                            <Setter Property="BorderThickness" Value="5"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
         <Label Content="Client choisi :" HorizontalAlignment="Left" Margin="15,335,0,0" VerticalAlignment="Top" Height="35" Width="120" Style="{StaticResource TextStyle}"/>
         <Label Content="clientActuel" HorizontalAlignment="Left" Margin="117,335,0,0" VerticalAlignment="Top" Height="35" Width="120" x:Name="currentClientLabel" Style="{StaticResource TextStyle}"/>
         <Label Content="Voir les Factures client" HorizontalAlignment="Left" Margin="192,21,0,0" VerticalAlignment="Top" Height="35" Width="274" Style="{StaticResource TextStyle}"/>

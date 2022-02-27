@@ -57,7 +57,7 @@ namespace HebdoProgSemaine3.Vues
             Client currentCli = listBox.SelectedItem as Client;
             if(currentCli != null)
             {
-                _connexion._currentClient = currentCli;
+                 _connexion._currentClient = currentCli;
                 currentClient.Content = _connexion._currentClient.Nom + " " + _connexion._currentClient.Prenom;//Nom du client séléctionné dans la page
             }
            

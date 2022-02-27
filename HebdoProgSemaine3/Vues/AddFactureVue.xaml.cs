@@ -69,8 +69,10 @@ namespace HebdoProgSemaine3.Vues
                     PdfPage page = document.Pages.Add();
                     PdfGraphics graphics = page.Graphics;
                     PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
+                    int finalLength = 80;
 
-                    graphics.DrawString("Prix total  : " + CurrentFacture.calculPrix().ToString() + " € ", font, PdfBrushes.Black, new System.Drawing.PointF(0, 120));//Passer ça en position relative en fonction de la taille du tableau
+
+
                     PdfGrid pdfGrid = new PdfGrid();
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add("Produit");
@@ -79,11 +81,14 @@ namespace HebdoProgSemaine3.Vues
                     foreach (LigneFacture ligne in CurrentFacture.LignesFactures)
                     {
                         dataTable.Rows.Add(new object[] { ligne.Produit.LibProduit.ToString(), ligne.Qte.ToString(), (ligne.Produit.Prix * ligne.Qte).ToString() + "e" });
+                        finalLength += 20; 
                     }
                     pdfGrid.DataSource = dataTable;
                     pdfGrid.Draw(page, new System.Drawing.PointF(80, 80));
                     graphics.DrawString("Client : " + _connexion._currentClient.ToString(), font, PdfBrushes.Black, new System.Drawing.PointF(0, 20));
                     graphics.DrawString("Facture du  " + CurrentFacture.DateFacture.ToString(), font, PdfBrushes.Black, new System.Drawing.PointF(0, 0));
+                    graphics.DrawString("Prix total  : " + CurrentFacture.calculPrix().ToString() + " € ", font, PdfBrushes.Black, new System.Drawing.PointF(0, finalLength));//Passer ça en position relative en fonction de la taille du tableau
+
                     document.Save("MVVMFacture.pdf");
 
 
@@ -158,5 +163,7 @@ namespace HebdoProgSemaine3.Vues
             }
             PrixTotal.Content = "Prix Total : " + CurrentFacture.calculPrix().ToString() + " €";
         }
+
+
     }
 }
