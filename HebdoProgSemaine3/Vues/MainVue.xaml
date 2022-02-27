@@ -10,7 +10,7 @@
             CornerRadius="10">
         <Grid>
 
-            <TextBox HorizontalAlignment="Left" Margin="234,46,0,0" VerticalAlignment="Top" Width="202" Height="51" x:Name="nomClient" Style="{StaticResource ModernTextBox}" />
+            <TextBox HorizontalAlignment="Left" Margin="211,54,0,0" VerticalAlignment="Top" Width="183" Height="30" x:Name="nomClient" Background="DarkGray" />
             <Label Content="Client choisi :" HorizontalAlignment="Left" Margin="189,335,0,0" VerticalAlignment="Top" Height="35" Width="120" Style="{StaticResource TextStyle}"/>
             <Label Content="clientActuel" HorizontalAlignment="Left" Margin="357,335,0,0" VerticalAlignment="Top" Height="35" Width="120" x:Name="currentClient" Style="{StaticResource TextStyle}"/>
             <Label Content="Entrez le nom du client : " HorizontalAlignment="Left" Margin="65,54,0,0" VerticalAlignment="Top" Style="{StaticResource TextStyle}"/>

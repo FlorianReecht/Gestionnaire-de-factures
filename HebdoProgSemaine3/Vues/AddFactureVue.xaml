@@ -42,7 +42,7 @@
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Margin" Value="9"></Setter>
-                         <Setter Property="Foreground" Value="Snow"></Setter>
+                        <Setter Property="Foreground" Value="Snow"></Setter>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="BorderBrush" Value="Black"></Setter>
@@ -59,7 +59,7 @@
             <Label Content="Produit Séléctioné : " HorizontalAlignment="Left" Margin="8,302,0,0" VerticalAlignment="Top" Height="30" Width="127" Style="{StaticResource TextStyle}"/>
             <Label Content="Chercher un produit :" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Style="{StaticResource TextStyle}"/>
             <Label x:Name="PrixTotal" Margin="433,310,44,44" Content="Prix :" Style="{StaticResource TextStyle}" RenderTransformOrigin="0.5,0.5"></Label>
-            <TextBox HorizontalAlignment="Left" Margin="156,30,0,0"   VerticalAlignment="Top" Width="226" x:Name="nomProduit" Style="{StaticResource ModernTextBox}"/>
+            <TextBox HorizontalAlignment="Left" Margin="156,40,0,0"   VerticalAlignment="Top" Width="226" x:Name="nomProduit" Background="DarkGray" Foreground="Snow"/>
 
         </Grid>
 
