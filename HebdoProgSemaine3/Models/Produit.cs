@@ -10,21 +10,23 @@ namespace HebdoProgSemaine3
     {
         Alimentaire,Autre
     }
-    public class Produit
+    public class produit
     {
-        public int NumProduit { get; set; }
-        public string LibProduit { get; set; }
-        public double Prix { get; set; }
+        public int PRO_CODE { get; set; }
+        public string PRO_LIB { get; set; }
+        public double PRO_PRIX { get; set; }
+        Categorie PRO_CAT;
 
-        public Produit(int n,string  L,double P)
+        public produit(int n,string  L,double P)
         {
-            NumProduit = n;
-            LibProduit = L;
-            Prix = P;
+            PRO_CODE = n;
+            PRO_LIB = L;
+            PRO_PRIX = P;
+            PRO_CAT = Categorie.Autre;
         }
         public override string ToString()
         {
-            return NumProduit + ". " + LibProduit;
+            return PRO_CODE + ". " + PRO_LIB;
         }
 
     }

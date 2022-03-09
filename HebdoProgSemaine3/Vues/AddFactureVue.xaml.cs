@@ -80,7 +80,7 @@ namespace HebdoProgSemaine3.Vues
                     dataTable.Columns.Add("Prix");
                     foreach (LigneFacture ligne in CurrentFacture.LignesFactures)
                     {
-                        dataTable.Rows.Add(new object[] { ligne.Produit.LibProduit.ToString(), ligne.Qte.ToString(), (ligne.Produit.Prix * ligne.Qte).ToString() + "e" });
+                        dataTable.Rows.Add(new object[] { ligne.Produit.PRO_LIB.ToString(), ligne.Qte.ToString(), (ligne.Produit.PRO_PRIX * ligne.Qte).ToString() + "e" });
                         finalLength += 20; 
                     }
                     pdfGrid.DataSource = dataTable;
@@ -136,10 +136,13 @@ namespace HebdoProgSemaine3.Vues
         private void ClickOnProduitOnList(object sender, MouseButtonEventArgs e)//Séléction du produit dans la liste
         {
             ListBox listBox = sender as ListBox;
-            Produit p = listBox.SelectedItem as Produit;
+            produit p = listBox.SelectedItem as produit;
+            if(listBox.SelectedItem!=null)
+            {
+                currentProduit.Content = listBox.SelectedItem.ToString();
+                _connexion.CurrentProduit = p;
+            }
 
-            currentProduit.Content = listBox.SelectedItem.ToString();
-            _connexion.CurrentProduit = p;
         }
         private void AjoutFacture(object sender, RoutedEventArgs e)
         {
@@ -147,7 +150,7 @@ namespace HebdoProgSemaine3.Vues
             bool found = false;
             for (int i = 0; i < CurrentFacture.LignesFactures.Count; i++)
             {
-                if (CurrentFacture.LignesFactures[i].Produit.NumProduit == newLine.Produit.NumProduit)
+                if (CurrentFacture.LignesFactures[i].Produit.PRO_CODE == newLine.Produit.PRO_CODE)
                 {
                     found = true;
                     //On update la quantité et le prix 

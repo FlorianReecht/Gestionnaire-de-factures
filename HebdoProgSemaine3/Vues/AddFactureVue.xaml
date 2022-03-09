@@ -8,20 +8,28 @@
              d:DesignHeight="394" d:DesignWidth="681">
     <Border Background="#272537" CornerRadius="10">
         <Grid RenderTransformOrigin="0.594,0.367" Margin="10,0,0,10">
-            <Button Margin="426,331,145,8" Click="Imprimer_Click" Style="{StaticResource EnregistrerFactureButton}" Width="100"/>
-            <Button Margin="156,328,415,6" Click="AjoutFacture"  Style="{StaticResource AjouterProduitButton}" Width="100"/>
-            <Button x:Name="ImprimerBouton" Margin="546,332,25,8" Click="PrintFacture" Style="{StaticResource ImprimerButton}" Width="100"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
 
-
-
-
-            <TextBox HorizontalAlignment="Left" Margin="87,347,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="64" x:Name="QteBox" Background="Transparent" Foreground="Snow" />
-            <ListBox Grid.Column="0" x:Name="ListProduit" Margin="13,117,415,104" 
+            </Grid.RowDefinitions>
+            <Button Grid.Column="1" Grid.Row="3" Click="Imprimer_Click" Style="{StaticResource EnregistrerFactureButton}" Width="100"/>
+            <Button  Click="AjoutFacture"  Style="{StaticResource AjouterProduitButton}" Grid.Column="1" Grid.Row="3" Width="100" HorizontalAlignment="Left" />
+            <Button x:Name="ImprimerBouton" Click="PrintFacture" Style="{StaticResource ImprimerButton}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right"/>
+            <TextBox VerticalAlignment="Bottom" HorizontalAlignment="Right"  Text="0"   x:Name="QteBox" Background="Transparent" Foreground="Snow" Grid.Row="3" Grid.Column="0" Margin="0,0,234,0" />
+            
+            <ListBox x:Name="ListProduit" Grid.Row="1"  Grid.RowSpan="2"
                      MouseDoubleClick="ClickOnProduitOnList" Style="{StaticResource ComboBoxTheme}" ItemsSource ="{Binding}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding LibProduit}" Foreground="Snow" Width="120"></TextBlock>
+                            <TextBlock Text="{Binding PRO_LIB}" Foreground="Snow" Width="120"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -29,16 +37,10 @@
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Margin" Value="9"></Setter>
                         <Setter Property="Padding" Value="9"></Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="BorderBrush" Value="Black"></Setter>
-                                <Setter Property="BorderThickness" Value="5"></Setter>
-                            </Trigger>
-                        </Style.Triggers>
                     </Style>
                 </ListBox.ItemContainerStyle>
             </ListBox>
-            <ListBox x:Name="currentFacture" Margin="428,112,63,86" SelectionChanged="currentFacture_SelectionChanged" Style="{StaticResource ComboBoxTheme}">
+            <ListBox x:Name="currentFacture"  SelectionChanged="currentFacture_SelectionChanged" Style="{StaticResource ComboBoxTheme}" Grid.Column="1" Grid.Row="2">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Margin" Value="9"></Setter>
@@ -52,14 +54,14 @@
                     </Style>
                 </ListBox.ItemContainerStyle>
             </ListBox>
-            <Label HorizontalAlignment="Left" Margin="156,304,0,0"  Content="ProduitActuel" VerticalAlignment="Top" Height="28" Width="145" x:Name="currentProduit" Style="{StaticResource TextStyle}"/>
-            <Label Content="Quantité" HorizontalAlignment="Left" Margin="8,343,0,0" VerticalAlignment="Top" Style="{StaticResource TextStyle}"/>
-            <Label Content="Facture actuelle " HorizontalAlignment="Left" Margin="440,76,0,0" VerticalAlignment="Top" Height="26" Width="247" Style="{StaticResource TextStyle}"/>
-            <Label Content="" HorizontalAlignment="Left" Margin="206,94,0,0" VerticalAlignment="Top" x:Name="nomCli" Height="37" Width="217" Style="{StaticResource TextStyle}"/>
-            <Label Content="Produit Séléctioné : " HorizontalAlignment="Left" Margin="8,302,0,0" VerticalAlignment="Top" Height="30" Width="127" Style="{StaticResource TextStyle}"/>
-            <Label Content="Chercher un produit :" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Style="{StaticResource TextStyle}"/>
-            <Label x:Name="PrixTotal" Margin="433,310,44,44" Content="Prix :" Style="{StaticResource TextStyle}" RenderTransformOrigin="0.5,0.5"></Label>
-            <TextBox HorizontalAlignment="Left" Margin="156,40,0,0"   VerticalAlignment="Top" Width="226" x:Name="nomProduit" Background="DarkGray" Foreground="Snow"/>
+            <Label HorizontalAlignment="Left" Content="p" x:Name="currentProduit"  Grid.Row="3"  Grid.Column="0" Style="{StaticResource TextStyle}" Margin="256,0,0,61"/>
+            <Label Content="Quantité"  Style="{StaticResource TextStyle}" VerticalAlignment="Bottom" Grid.Row="3" Margin="0,0,264,0"/>
+            <Label Content="Facture actuelle " Grid.Row="1" Grid.Column="1"  Style="{StaticResource TextStyle}"/>
+            <Label Content=""  x:Name="nomCli"  Style="{StaticResource TextStyle}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom"/>
+            <Label Content="Produit Séléctioné : "  Style="{StaticResource TextStyle}" Grid.Row="3" Width="Auto" Height="Auto" Margin="0,0,70,61"/>
+            <Label Content="Chercher un produit :" Grid.Column="0" Grid.Row="0" Style="{StaticResource TextStyle}"/>
+            <Label x:Name="PrixTotal"  Content="Prix :" Style="{StaticResource TextStyle}" Grid.Column="1" Grid.Row="3" ></Label>
+            <TextBox  x:Name="nomProduit" Background="DarkGray" Foreground="Snow"   Grid.Column="1" />
 
         </Grid>
 

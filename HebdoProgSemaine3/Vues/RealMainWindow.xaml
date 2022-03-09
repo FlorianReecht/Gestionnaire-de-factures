@@ -5,55 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HebdoProgSemaine3.Vues"
         mc:Ignorable="d"
-        Background="#272537"
+        Background="Purple"
         Title="RealMainWindow" Height="450" Width="800"
-        ResizeMode="NoResize">
+        >
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="60"></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <ListBox Grid.Column="0" x:Name="NavBarListBox"  Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBoxItem>
                 <Button Background="Transparent" Foreground="Snow" Click="goBackToMain" BorderBrush="{x:Null}" >
                     <Button.ContentTemplate>
                         <ItemContainerTemplate>
-                            <Image Source="..\Resources\HomeLogo.png" Width="95" Height="95" ></Image>
+                            <Image Source="..\Resources\HomeLogo.png" Width="Auto" Height="Auto" ></Image>
                         </ItemContainerTemplate>
                     </Button.ContentTemplate>
                 </Button>
             </ListBoxItem>
             <ListBoxItem>
-                <Label Content="Menu Principal" Style="{StaticResource TextStyle}"></Label>
-            </ListBoxItem>
-            <ListBoxItem>
-                <Button Background="Transparent" Click="VoirFactures" Width="95" Height="95" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                <Button Background="Transparent" Click="VoirFactures" Width="Auto" Height="Auto" BorderBrush="{x:Null}" Foreground="{x:Null}">
                     <Button.ContentTemplate>
                         <ItemContainerTemplate>
-                            <Image Source="..\Resources\DocLogo.png" Width="95" Height="95"></Image>
+                            <Image Source="..\Resources\DocLogo.png" Width="Auto" Height="Auto" RenderTransformOrigin="0.548,0.578"></Image>
                         </ItemContainerTemplate>
                     </Button.ContentTemplate>
                 </Button>
-            </ListBoxItem>
-            <ListBoxItem>
-                <Label Content="Voir Factures" Style="{StaticResource TextStyle}"></Label>
             </ListBoxItem>
             <ListBoxItem>
                 <Button  Background="Transparent"  Click="MooveToAddFacturePage" BorderBrush="{x:Null}">
                     <Button.ContentTemplate>
                         <ItemContainerTemplate>
-                            <Image Source="..\Resources\PlusLogo.png" Width="95" Height="95"></Image>
+                            <Image Source="..\Resources\PlusLogo.png" Width="Auto" Height="Auto"></Image>
                         </ItemContainerTemplate>
                     </Button.ContentTemplate>
                 </Button>
+                
             </ListBoxItem>
             <ListBoxItem>
-                <Label Style="{StaticResource TextStyle}"> Ajouter une Facture</Label>
+                <Button  Background="Transparent"  Click="MooveToAddClientPage" BorderBrush="{x:Null}">
+                    <Button.ContentTemplate>
+                        <ItemContainerTemplate>
+                            <Image Source="..\Resources\UserLogo.png" Width="Auto" Height="Auto"></Image>
+                        </ItemContainerTemplate>
+                    </Button.ContentTemplate>
+                </Button>
+
             </ListBoxItem>
         </ListBox>
 
         <DockPanel Grid.Column="1">
-            <ContentControl x:Name="ContentView" Height="394" Width="681" ></ContentControl>
+            <ContentControl x:Name="ContentView" ></ContentControl>
         </DockPanel>
 
     </Grid>

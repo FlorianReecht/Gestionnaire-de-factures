@@ -9,12 +9,12 @@ namespace HebdoProgSemaine3
 {
     public class LigneFacture
     {
-        public Produit Produit { get; set; }
+        public produit Produit { get; set; }
         public int Qte { get; set; }
 
         public double calculPrixTotal()
         {
-            return Qte*Produit.Prix;
+            return Qte*Produit.PRO_PRIX;
         }
         public LigneFacture()
         {
@@ -25,10 +25,10 @@ namespace HebdoProgSemaine3
         public override  string ToString()
         {
             int euroAsciicode = 0x80;
-            return Produit.LibProduit + "   " + Qte +"  "+ calculPrixTotal()+"€";
+            return Produit.PRO_LIB + "   " + Qte +"  "+ calculPrixTotal()+"€";
 
         }
-        public LigneFacture(Produit p,int q)
+        public LigneFacture(produit p,int q)
         {
             Produit= p;
             Qte= q;

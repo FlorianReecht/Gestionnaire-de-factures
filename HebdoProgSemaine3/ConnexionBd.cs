@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Linq;
+using HebdoProgSemaine3.Models;
 
 namespace HebdoProgSemaine3
 {
@@ -21,14 +22,14 @@ namespace HebdoProgSemaine3
         //Connexion Bd dans chacune des vues.
 
         public static ObservableCollection<Client> ClientList = new ObservableCollection<Client>();
-        public static ObservableCollection<Produit> ProductList = new ObservableCollection<Produit>();
+        public static ObservableCollection<produit> ProductList = new ObservableCollection<produit>();
         public static ObservableCollection<LigneFacture> CurrentFacture = new ObservableCollection<LigneFacture>();
         public static ObservableCollection<Facture> FactureList = new ObservableCollection<Facture>();
        
         List<String> config = new List<String>(); //Lecture dans le fichier config.xml en chemin absolu changer pour le chemin relatif
 
       
-        public Produit CurrentProduit { get; set; }
+        public produit CurrentProduit { get; set; }
         public Client _currentClient { get; set; }
         public void ClearAllLists()
         {
@@ -39,7 +40,34 @@ namespace HebdoProgSemaine3
         }
 
         //Association entre l'id du produit, la quantité et le prix.
-  
+        public void FillClientListButWithEFCore()
+        {
+            using(var db = new HebdoChallDbContext())
+            {
+                foreach(var client in db.Client)
+                {
+                    ClientList.Add(client);
+                }
+            }
+        }
+        public void AddClientToListWithFCore(Client cli)
+        {
+            using(var db= new HebdoChallDbContext())
+            {
+                db.Client.Add(cli);
+                db.SaveChanges();
+            }
+        }
+        public void DeleteClientFromList(Client cli)
+        {
+            using(var db=new HebdoChallDbContext())
+            {
+                db.Client.Remove(cli);
+                db.SaveChanges();
+                ClientList.Remove(cli);
+
+            }
+        }
         public MySqlConnection Connect()
         {
             string path = "C:/Users/reflo/source/repos/HebdoProgSemaine3/HebdoProgSemaine3/Config.xml";
@@ -102,7 +130,7 @@ namespace HebdoProgSemaine3
                 MySqlDataReader reader = c2.ExecuteReader();
                 while (reader.Read())
                 {
-                    Produit p = new Produit((int)reader["PRO_CODE"], reader["PRO_LIB"].ToString(), (double)reader["PRO_PRIX"]);
+                    produit p = new produit((int)reader["PRO_CODE"], reader["PRO_LIB"].ToString(), (double)reader["PRO_PRIX"]);
                     ProductList.Add(p);
                 }
                 c.Close ();
@@ -122,7 +150,7 @@ namespace HebdoProgSemaine3
                 MySqlConnection co=Connect();
                 MySqlCommand cmd = new MySqlCommand(request, co);
                 MySqlParameter id = new MySqlParameter("@idCli", MySqlDbType.Int32);
-                id.Value = c.NumCli;
+                id.Value = c.CLI_CODE;
                 cmd.Parameters.Add(id);
                 cmd.Prepare();
                 MySqlDataReader reader=cmd.ExecuteReader();
@@ -130,7 +158,7 @@ namespace HebdoProgSemaine3
                 {
                     int num = (int)reader["FAC_NUM"];
                     DateTime date = (DateTime)reader["FAC_DATE"];
-                    Facture f=new Facture(_currentClient.NumCli,date, num);
+                    Facture f=new Facture(_currentClient.CLI_CODE,date, num);
                     ConnexionBd.FactureList.Add(f);
 
                 }
@@ -199,7 +227,7 @@ namespace HebdoProgSemaine3
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        Produit p = new Produit((int)reader["PRO_CODE"], reader["PRO_LIB"].ToString(), (double)reader["PRO_PRIX"]);
+                        produit p = new produit((int)reader["PRO_CODE"], reader["PRO_LIB"].ToString(), (double)reader["PRO_PRIX"]);
                         ProductList.Add(p);    
                     }
                     c.Close();
@@ -239,7 +267,7 @@ namespace HebdoProgSemaine3
                 cmd2.Parameters.Add(numFacture);
                 cmd2.Parameters.Add(qte);
                 cmd2.Parameters.Add(numProduit);
-                numC.Value = _currentClient.NumCli;//Attribut statique pas la meilleure solution.
+                numC.Value = _currentClient.CLI_CODE;//Attribut statique pas la meilleure solution.
                 datep.Value = facture.DateFacture;
                 cmd.Parameters.Add(datep);
                 cmd.Parameters.Add(numC);
@@ -256,7 +284,7 @@ namespace HebdoProgSemaine3
     
                     numFacture.Value = lastIndex;
                     qte.Value = ligneFacture.Qte;
-                    numProduit.Value =ligneFacture.Produit.NumProduit;
+                    numProduit.Value =ligneFacture.Produit.PRO_CODE;
 
                     cmd2.Prepare();
                     var query2= cmd2.ExecuteNonQuery();
@@ -273,7 +301,52 @@ namespace HebdoProgSemaine3
             
 
         }
-    
-    
+        public void InsertClientIntoBdd(Client c)//Ajoute le client dans la base
+        {
+            string requestLastInsert = "SELECT LAST_INSERT_ID() ";
+            string reqInsertClient = "INSERT INTO hebdochall3.client (CLI_CODE,CLI_NOM,CLI_PRENOM,CLI_ADR,CLI_COMP,CLI_CP,CLI_VILLE,TEL) VALUES (@numclient,@nom,@prenom,@adresse,@comp,@cp,@ville,@tel)";
+            MySqlConnection conn = Connect();
+            MySqlCommand cmd = new MySqlCommand(requestLastInsert, conn);
+            MySqlCommand cmd2 = new MySqlCommand(reqInsertClient, conn);
+            MySqlParameter num= new MySqlParameter("@numclient",MySqlDbType.Int32);
+            num.Value=cmd.ExecuteScalar();
+            cmd2.Parameters.Add(num);
+            MySqlParameter nom = new MySqlParameter("@nom", MySqlDbType.VarChar, 50);
+            MySqlParameter prenom = new MySqlParameter("@prenom", MySqlDbType.VarChar, 50);
+            MySqlParameter adresse = new MySqlParameter("@adresse", MySqlDbType.VarChar, 50);
+            MySqlParameter comp = new MySqlParameter("@comp", MySqlDbType.VarChar, 50);
+            MySqlParameter ville = new MySqlParameter("@ville", MySqlDbType.VarChar, 50);
+            MySqlParameter tel = new MySqlParameter("@tel", MySqlDbType.VarChar, 50);
+            MySqlParameter cp = new MySqlParameter("@cp", MySqlDbType.Int32);
+            nom.Value = c.CLI_NOM.ToString();
+            adresse.Value = "testAdresse";
+            comp.Value = "testComp";
+            ville.Value = "testVille";
+            tel.Value = "testTel";
+            cp.Value = 51500;
+            prenom.Value = c.CLI_PRENOM.ToString();
+            cmd2.Parameters.Add(nom);
+            cmd2.Parameters.Add(prenom);
+            cmd2.Parameters.Add(adresse);
+            cmd2.Parameters.Add(comp);
+            cmd2.Parameters.Add(cp);
+            cmd2.Parameters.Add(ville);
+            cmd2.Parameters.Add(tel);
+            cmd2.Prepare();
+            var query=cmd2.ExecuteNonQuery();
+            if (query != 0)
+            {
+                MessageBox.Show("Insertion client effectuée");
+            }
+            else
+            {
+                MessageBox.Show("Erreur pdt l'insertion client");
+            }
+
+
+
+        }
+
+
     }
 }

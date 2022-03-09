@@ -16,22 +16,22 @@ using System.Windows.Shapes;
 namespace HebdoProgSemaine3.Vues
 {
     /// <summary>
-    /// Logique d'interaction pour VoirFacturesVue.xaml
+    /// Logique d'interaction pour AddClientVue.xaml
     /// </summary>
-    public partial class VoirFacturesVue : UserControl
+    public partial class AddClientVue : UserControl
     {
-        ConnexionBd connexion;
-        public VoirFacturesVue(ConnexionBd co)
+        ConnexionBd _connexion;
+        public AddClientVue(ConnexionBd co)
         {
-            connexion = co;
             InitializeComponent();
-            ListFactureClient.ItemsSource = ConnexionBd.FactureList;
-            currentClientLabel.Content = connexion._currentClient.CLI_NOM + " " + connexion._currentClient.CLI_PRENOM;
-            connexion.ClearAllLists();
-            connexion.Fill_Facture_List(connexion._currentClient);
-
+            _connexion = co;
         }
 
+        private void AddClient(object sender, RoutedEventArgs e)
+        {
+            Client addingCLi= new Client(0,nomCli.Text.ToString(),PrenomCli.Text.ToString(),"test adresse","test complément",51000,"test ville","testtel");
+            _connexion.AddClientToListWithFCore(addingCLi);
 
+        }
     }
 }

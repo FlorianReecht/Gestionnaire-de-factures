@@ -32,13 +32,14 @@ namespace HebdoProgSemaine3.Vues
             
             _connexion = co;
             _connexion.ClearAllLists();
-            _connexion.Fill_Client_List();
+            //_connexion.Fill_Client_List();
+            _connexion.FillClientListButWithEFCore();
 
             ClientList.ItemsSource = ConnexionBd.ClientList;
             nomClient.TextChanged += new TextChangedEventHandler(TextChanged);
             if(_connexion._currentClient != null)
             {
-                currentClient.Content= _connexion._currentClient.Nom + _connexion._currentClient.Prenom;
+                currentClient.Content= _connexion._currentClient.CLI_NOM + _connexion._currentClient.CLI_PRENOM;
             }
 
         }
@@ -58,9 +59,17 @@ namespace HebdoProgSemaine3.Vues
             if(currentCli != null)
             {
                  _connexion._currentClient = currentCli;
-                currentClient.Content = _connexion._currentClient.Nom + " " + _connexion._currentClient.Prenom;//Nom du client séléctionné dans la page
+                currentClient.Content = _connexion._currentClient.CLI_NOM + " " + _connexion._currentClient.CLI_PRENOM;//Nom du client séléctionné dans la page
             }
            
+        }
+
+        private void DeleteClient(object sender, RoutedEventArgs e)
+        {
+            _connexion.DeleteClientFromList(_connexion._currentClient);
+            _connexion._currentClient = null;
+            currentClient.Content="";
+            MessageBox.Show("Suppression effectuee");
         }
     }
 }

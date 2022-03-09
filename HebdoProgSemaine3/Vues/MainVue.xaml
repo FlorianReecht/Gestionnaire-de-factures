@@ -9,18 +9,30 @@
     <Border Background="#272537"
             CornerRadius="10">
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="AUto"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="0.25*"></RowDefinition>
+            </Grid.RowDefinitions>
+            
 
-            <TextBox HorizontalAlignment="Left" Margin="211,54,0,0" VerticalAlignment="Top" Width="183" Height="30" x:Name="nomClient" Background="DarkGray" />
-            <Label Content="Client choisi :" HorizontalAlignment="Left" Margin="189,335,0,0" VerticalAlignment="Top" Height="35" Width="120" Style="{StaticResource TextStyle}"/>
-            <Label Content="clientActuel" HorizontalAlignment="Left" Margin="357,335,0,0" VerticalAlignment="Top" Height="35" Width="120" x:Name="currentClient" Style="{StaticResource TextStyle}"/>
-            <Label Content="Entrez le nom du client : " HorizontalAlignment="Left" Margin="65,54,0,0" VerticalAlignment="Top" Style="{StaticResource TextStyle}"/>
-            <Label Content="Outil de gestion de factures pour les clients " FontSize="20" Style="{StaticResource TextStyle}" Margin="65,10,181,348"></Label>
-            <ListBox  x:Name="ClientList" Margin="189,125,226,79" MouseDoubleClick="ClickOnClientOnList" Style="{StaticResource ComboBoxTheme}" ItemsSource="{Binding}">
+                <Label Content="Entrez le nom du client : " Style="{StaticResource TextStyle}" VerticalAlignment="Center" Width="Auto" Grid.Row="1" Grid.Column="0"/>
+                <TextBox    x:Name="nomClient" Background="DarkGray"  Grid.Column="1" Grid.Row="1"/>
+            <Label Content="Client choisi :" Grid.Row="3" Grid.Column="0" Style="{StaticResource TextStyle}"/>
+            <Label Content="clientActuel" Grid.Row="3" Grid.Column="1" x:Name="currentClient" Style="{StaticResource TextStyle}"/>
+            <Button Content="Supprimer Client" Grid.Column="1" Grid.Row="3" Width="100" Height="Auto" Margin="300,0,0,0" Click="DeleteClient"></Button>
+            <Label Content="Outil de gestion de factures pour les clients " FontSize="20" Style="{StaticResource TextStyle}" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Center"> </Label>
+            <ListBox  x:Name="ClientList" Grid.Row="2" Grid.ColumnSpan="2"  MouseDoubleClick="ClickOnClientOnList" Style="{StaticResource ComboBoxTheme}" ItemsSource="{Binding}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Nom}" Foreground="Snow" Width="100"></TextBlock>
-                            <TextBlock Text="{Binding Prenom }" Foreground="Snow" Width="100"></TextBlock>
+                            <TextBlock Text="{Binding CLI_NOM}" Foreground="Snow" Width="100"></TextBlock>
+                            <TextBlock Text="{Binding CLI_PRENOM }" Foreground="Snow" Width="100"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

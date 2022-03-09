@@ -57,5 +57,9 @@ namespace HebdoProgSemaine3.Vues
             ContentView.Content = new MainVue(_connexion);
         }
 
+        private void MooveToAddClientPage(object sender, RoutedEventArgs e)
+        {
+            ContentView.Content = new AddClientVue(_connexion);
+        }
     }
 }
