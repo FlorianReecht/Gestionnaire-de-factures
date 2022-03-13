@@ -25,6 +25,7 @@ namespace HebdoProgSemaine3
         public static ObservableCollection<produit> ProductList = new ObservableCollection<produit>();
         public static ObservableCollection<LigneFacture> CurrentFacture = new ObservableCollection<LigneFacture>();
         public static ObservableCollection<Facture> FactureList = new ObservableCollection<Facture>();
+        public static ObservableCollection<LigneFacture> currentViewFacture = new ObservableCollection<LigneFacture>();
        
         List<String> config = new List<String>(); //Lecture dans le fichier config.xml en chemin absolu changer pour le chemin relatif
 
@@ -38,15 +39,46 @@ namespace HebdoProgSemaine3
             FactureList.Clear();
            
         }
+        public void FillListFactureButWithEfCore(Client currentCli)
+        {
+            using(var db = new HebdoChallDbContext())
+            {
+                var cliFactures = db.Facture.Where(f => f.CLI_NUM == currentCli.CLI_CODE).ToList();
+                foreach (var cliFacture in cliFactures)
+                {
+                    FactureList.Add(cliFacture);
+                }
+            }
+        }
+        public void  FillLignesFactureFromFacture(Facture f)
+        {
+            using (var db =new HebdoChallDbContext())
+            {
+                var lignes= db.ligne.Where( l=> l.LIG_FACT==f.FAC_NUM).ToList();
+                foreach( LigneFacture l in lignes)
+                {
+                    currentViewFacture.Add(l);
+                }
+            }
+        }
 
-        //Association entre l'id du produit, la quantité et le prix.
         public void FillClientListButWithEFCore()
         {
             using(var db = new HebdoChallDbContext())
             {
-                foreach(var client in db.Client)
+                foreach(Client client in db.Client)
                 {
                     ClientList.Add(client);
+                }
+            }
+        }
+        public void FillProduitListWithEFCore()
+        {
+            using (var db = new HebdoChallDbContext())
+            {
+                foreach(produit p in db.Produit)
+                {
+                    ProductList.Add(p);
                 }
             }
         }
@@ -58,6 +90,14 @@ namespace HebdoProgSemaine3
                 db.SaveChanges();
             }
         }
+        public void AddProduitToList(produit p)
+        {
+            using (var db = new HebdoChallDbContext())
+            {
+                db.Produit.Add(p);
+                db.SaveChanges();
+            }
+        }
         public void DeleteClientFromList(Client cli)
         {
             using(var db=new HebdoChallDbContext())
@@ -65,6 +105,16 @@ namespace HebdoProgSemaine3
                 db.Client.Remove(cli);
                 db.SaveChanges();
                 ClientList.Remove(cli);
+
+            }
+        }
+        public void DeleteProduitFromList(produit p)
+        {
+            using (var db = new HebdoChallDbContext())
+            {
+                db.Produit.Remove(p);
+                db.SaveChanges();
+                ProductList.Remove(p);
 
             }
         }
@@ -268,7 +318,7 @@ namespace HebdoProgSemaine3
                 cmd2.Parameters.Add(qte);
                 cmd2.Parameters.Add(numProduit);
                 numC.Value = _currentClient.CLI_CODE;//Attribut statique pas la meilleure solution.
-                datep.Value = facture.DateFacture;
+                datep.Value = facture.FAC_DATE;
                 cmd.Parameters.Add(datep);
                 cmd.Parameters.Add(numC);
                 cmd.Prepare();
@@ -283,7 +333,7 @@ namespace HebdoProgSemaine3
                 {
     
                     numFacture.Value = lastIndex;
-                    qte.Value = ligneFacture.Qte;
+                    qte.Value = ligneFacture.LIG_QTE;
                     numProduit.Value =ligneFacture.Produit.PRO_CODE;
 
                     cmd2.Prepare();

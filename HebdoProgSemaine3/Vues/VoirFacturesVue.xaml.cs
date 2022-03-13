@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,12 +27,27 @@ namespace HebdoProgSemaine3.Vues
             connexion = co;
             InitializeComponent();
             ListFactureClient.ItemsSource = ConnexionBd.FactureList;
+            LigneFactureOfFacture.ItemsSource = ConnexionBd.currentViewFacture;
+
             currentClientLabel.Content = connexion._currentClient.CLI_NOM + " " + connexion._currentClient.CLI_PRENOM;
             connexion.ClearAllLists();
-            connexion.Fill_Facture_List(connexion._currentClient);
+            connexion.FillListFactureButWithEfCore(connexion._currentClient);
 
         }
 
+        private void ChangeFactureEvent(object sender, SelectionChangedEventArgs e)
+        {
+            ListBox box = sender as ListBox;
+            if(box.SelectedItem!=null)
+            {
+                ConnexionBd.currentViewFacture.Clear();
+                Facture f = box.SelectedItem as Facture;
+                connexion.FillLignesFactureFromFacture(f);
+                MessageBox.Show(ConnexionBd.currentViewFacture.Count.ToString());
 
+
+            }
+
+        }
     }
 }

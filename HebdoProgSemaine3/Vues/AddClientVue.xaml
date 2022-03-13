@@ -6,36 +6,37 @@
              xmlns:local="clr-namespace:HebdoProgSemaine3.Vues"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-    <Label Content="Test"   FontSize="100"></Label>
-        <TextBox x:Name="nomCli" Grid.Row="0" Grid.Column="1" ></TextBox>
-        <TextBox x:Name="PrenomCli" Grid.Row="1" Grid.Column="1" ></TextBox>
-        <TextBox x:Name="VilleCLi" Grid.Row="2" Grid.Column="1" ></TextBox>
-        <TextBox x:Name="CpCLi" Grid.Row="3" Grid.Column="1" ></TextBox>
-        <TextBox x:Name="AdresseCli" Grid.Row="4" Grid.Column="1" ></TextBox>
-        <TextBox x:Name="CompCLi" Grid.Row="5" Grid.Column="1" ></TextBox>
-        <TextBox x:Name="TelCli" Grid.Row="6" Grid.Column="1"></TextBox>
-        <Label Content="Nom :" Grid.Row="0" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
-        <Label Content="Prenom :" Grid.Row="1" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
-        <Label Content="Ville :" Grid.Row="2" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
-        <Label Content="Code Postal :" Grid.Row="3" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
-        <Label Content="Adresse :" Grid.Row="4" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
-        <Label Content="Complément :" Grid.Row="5" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
-        <Label Content="Télephonne :" Grid.Row="6" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
-        <Button Content="AjouterCLient" Click="AddClient" Grid.Row="7" Grid.ColumnSpan="2" ></Button>
-    </Grid>
+    <Border Background="#272537" CornerRadius="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="nomCli" Grid.Row="0" Grid.Column="1" ></TextBox>
+            <TextBox x:Name="PrenomCli" Grid.Row="1" Grid.Column="1" ></TextBox>
+            <TextBox x:Name="VilleCLi" Grid.Row="2" Grid.Column="1" ></TextBox>
+            <TextBox x:Name="CpCLi" Grid.Row="3" Grid.Column="1" ></TextBox>
+            <TextBox x:Name="AdresseCli" Grid.Row="4" Grid.Column="1" ></TextBox>
+            <TextBox x:Name="CompCLi" Grid.Row="5" Grid.Column="1" ></TextBox>
+            <TextBox x:Name="TelCli" Grid.Row="6" Grid.Column="1"></TextBox>
+            <Label Content="Nom :" Grid.Row="0" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
+            <Label Content="Prenom :" Grid.Row="1" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
+            <Label Content="Ville :" Grid.Row="2" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
+            <Label Content="Code Postal :" Grid.Row="3" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
+            <Label Content="Adresse :" Grid.Row="4" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
+            <Label Content="Complément :" Grid.Row="5" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
+            <Label Content="Télephonne :" Grid.Row="6" Grid.Column="0" Style="{StaticResource TextStyle}"></Label>
+            <Button Content="AjouterCLient" Click="AddClient" Grid.Row="7" Grid.ColumnSpan="2" ></Button>
+        </Grid>
+    </Border>
 </UserControl>

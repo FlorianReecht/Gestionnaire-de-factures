@@ -9,22 +9,28 @@
     <Border Background="#272537" CornerRadius="10">
         <Grid RenderTransformOrigin="0.594,0.367" Margin="10,0,0,10">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
 
             </Grid.RowDefinitions>
-            <Button Grid.Column="1" Grid.Row="3" Click="Imprimer_Click" Style="{StaticResource EnregistrerFactureButton}" Width="100"/>
-            <Button  Click="AjoutFacture"  Style="{StaticResource AjouterProduitButton}" Grid.Column="1" Grid.Row="3" Width="100" HorizontalAlignment="Left" />
-            <Button x:Name="ImprimerBouton" Click="PrintFacture" Style="{StaticResource ImprimerButton}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right"/>
-            <TextBox VerticalAlignment="Bottom" HorizontalAlignment="Right"  Text="0"   x:Name="QteBox" Background="Transparent" Foreground="Snow" Grid.Row="3" Grid.Column="0" Margin="0,0,234,0" />
+            <Button Grid.Column="6" Grid.Row="4" Click="Imprimer_Click" Style="{StaticResource EnregistrerFactureButton}" Width="100"/>
+            <Button  Click="AjoutFacture"  Style="{StaticResource AjouterProduitButton}" Grid.Column="5"  Grid.Row="4" />
+            <Button x:Name="ImprimerBouton" Click="PrintFacture" Style="{StaticResource ImprimerButton}" Grid.Column="4" Grid.Row="4" />
+            <TextBox   Text="0"   x:Name="QteBox" Background="Transparent" Foreground="Snow" Grid.Row="4" Grid.Column="3"  />
             
-            <ListBox x:Name="ListProduit" Grid.Row="1"  Grid.RowSpan="2"
+            <ListBox x:Name="ListProduit" Grid.Row="1"  Grid.RowSpan="3" Grid.ColumnSpan="3"
                      MouseDoubleClick="ClickOnProduitOnList" Style="{StaticResource ComboBoxTheme}" ItemsSource ="{Binding}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -40,7 +46,7 @@
                     </Style>
                 </ListBox.ItemContainerStyle>
             </ListBox>
-            <ListBox x:Name="currentFacture"  SelectionChanged="currentFacture_SelectionChanged" Style="{StaticResource ComboBoxTheme}" Grid.Column="1" Grid.Row="2">
+            <ListBox x:Name="currentFacture"  SelectionChanged="currentFacture_SelectionChanged" Style="{StaticResource ComboBoxTheme}" Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="2" >
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Margin" Value="9"></Setter>
@@ -54,13 +60,13 @@
                     </Style>
                 </ListBox.ItemContainerStyle>
             </ListBox>
-            <Label HorizontalAlignment="Left" Content="p" x:Name="currentProduit"  Grid.Row="3"  Grid.Column="0" Style="{StaticResource TextStyle}" Margin="256,0,0,61"/>
-            <Label Content="Quantité"  Style="{StaticResource TextStyle}" VerticalAlignment="Bottom" Grid.Row="3" Margin="0,0,264,0"/>
-            <Label Content="Facture actuelle " Grid.Row="1" Grid.Column="1"  Style="{StaticResource TextStyle}"/>
-            <Label Content=""  x:Name="nomCli"  Style="{StaticResource TextStyle}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom"/>
-            <Label Content="Produit Séléctioné : "  Style="{StaticResource TextStyle}" Grid.Row="3" Width="Auto" Height="Auto" Margin="0,0,70,61"/>
+            <Label HorizontalAlignment="Left" Content="p" x:Name="currentProduit"  Grid.Row="4"  Grid.Column="1" Style="{StaticResource TextStyle}" />
+            <Label Content="Quantité"  Style="{StaticResource TextStyle}"  Grid.Row="4" Grid.Column="2" />
+            <Label Content="Facture actuelle " Grid.Row="0" Grid.Column="3"  Style="{StaticResource TextStyle}"/>
+            <Label Content=""  x:Name="nomCli"  Style="{StaticResource TextStyle}" Grid.Column="4" Grid.Row="0"/>
+            <Label Content="Produit Séléctioné : "  Style="{StaticResource TextStyle}" Grid.Row="4"/>
             <Label Content="Chercher un produit :" Grid.Column="0" Grid.Row="0" Style="{StaticResource TextStyle}"/>
-            <Label x:Name="PrixTotal"  Content="Prix :" Style="{StaticResource TextStyle}" Grid.Column="1" Grid.Row="3" ></Label>
+            <Label x:Name="PrixTotal"  Content="Prix :" Style="{StaticResource TextStyle}" Grid.Column="4" Grid.Row="3"  Grid.ColumnSpan="3"></Label>
             <TextBox  x:Name="nomProduit" Background="DarkGray" Foreground="Snow"   Grid.Column="1" />
 
         </Grid>

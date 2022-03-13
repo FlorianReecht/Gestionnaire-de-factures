@@ -37,10 +37,12 @@ namespace HebdoProgSemaine3.Vues
             currentLigneFacture = new LigneFacture();
 
             _connexion.ClearAllLists();
-            _connexion.Fill_Client_List();
+           
             ListProduit.ItemsSource = ConnexionBd.ProductList;
             currentFacture.ItemsSource = CurrentFacture.LignesFactures;
-            _connexion.Fill_Produit_List();
+            //_connexion.Fill_Produit_List();
+            _connexion.FillProduitListWithEFCore();
+
             nomProduit.TextChanged += new TextChangedEventHandler(TextChanged);
             QteBox.TextChanged += new TextChangedEventHandler(TextBox_TextChanged);
 
@@ -80,13 +82,13 @@ namespace HebdoProgSemaine3.Vues
                     dataTable.Columns.Add("Prix");
                     foreach (LigneFacture ligne in CurrentFacture.LignesFactures)
                     {
-                        dataTable.Rows.Add(new object[] { ligne.Produit.PRO_LIB.ToString(), ligne.Qte.ToString(), (ligne.Produit.PRO_PRIX * ligne.Qte).ToString() + "e" });
+                        dataTable.Rows.Add(new object[] { ligne.Produit.PRO_LIB.ToString(), ligne.LIG_QTE.ToString(), (ligne.Produit.PRO_PRIX * ligne.LIG_QTE).ToString() + "e" });
                         finalLength += 20; 
                     }
                     pdfGrid.DataSource = dataTable;
                     pdfGrid.Draw(page, new System.Drawing.PointF(80, 80));
                     graphics.DrawString("Client : " + _connexion._currentClient.ToString(), font, PdfBrushes.Black, new System.Drawing.PointF(0, 20));
-                    graphics.DrawString("Facture du  " + CurrentFacture.DateFacture.ToString(), font, PdfBrushes.Black, new System.Drawing.PointF(0, 0));
+                    graphics.DrawString("Facture du  " + CurrentFacture.FAC_DATE.ToString(), font, PdfBrushes.Black, new System.Drawing.PointF(0, 0));
                     graphics.DrawString("Prix total  : " + CurrentFacture.calculPrix().ToString() + " € ", font, PdfBrushes.Black, new System.Drawing.PointF(0, finalLength));//Passer ça en position relative en fonction de la taille du tableau
 
                     document.Save("MVVMFacture.pdf");
@@ -154,7 +156,7 @@ namespace HebdoProgSemaine3.Vues
                 {
                     found = true;
                     //On update la quantité et le prix 
-                    CurrentFacture.LignesFactures[i] = new LigneFacture(newLine.Produit, CurrentFacture.LignesFactures[i].Qte + newLine.Qte);
+                    CurrentFacture.LignesFactures[i] = new LigneFacture(newLine.Produit, CurrentFacture.LignesFactures[i].LIG_QTE + newLine.LIG_QTE);
                     //CurrentFacture.LignesFactures[i].calculPrixTotal();
                     break;
                 }
